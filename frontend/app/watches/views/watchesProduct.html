@@ -1,0 +1,250 @@
+﻿<div class="row" ng-show="productData" itemscope itemtype="http://schema.org/Product">
+    <!--meta tags-->
+    <meta itemprop="name" content="{{ productData.title }}" />
+    <meta itemprop="description" content="{{ removeHtmlTags(productData.editorialreviews[0]) }}" />
+    <div itemprop="brand" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="{{ productData.brand }}" />
+    </div>
+    <div itemprop="manufacturer" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="{{ productData.brand }}" />
+    </div>
+    <meta itemprop="productID" content="{{ productData.asin }}" />
+    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        <meta itemprop="priceCurrency" content="USD" />
+        <meta itemprop="price" content="{{ formatPrice(productData.price) }}" />
+        <meta itemprop="category" content="{{ productData.category }}" />
+        <link itemprop="availability" itemtype="http://schema.org/InStock" content="In Stock" />
+        <link itemprop="itemCondition" itemtype="http://schema.org/NewCondition" content="New" />
+    </div>
+    <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+        <meta itemprop="ratingValue" content="4.8" />
+        <meta itemprop="reviewCount" content="{{ productData.salesrank }}" />
+    </div>
+    <link itemprop="releaseDate" itemtype="http://schema.org/Date" content="{{ productData.dateAdded | date:'yyyy-MM-dd' }}" />
+    <div>
+        <div>
+            <div itemprop="isRelatedTo" itemscope itemtype="http://schema.org/Product" ng-repeat="relatedProduct in filterProducts(catProducts, productData)">
+                <meta itemprop="name" content="{{ relatedProduct.title }}" />
+                <a ui-sref="watchesProduct({id:relatedProduct._id, slug:relatedProduct.slug})" itemprop="url"></a>
+                <meta itemprop="description" content="{{ removeHtmlTags(relatedProduct.editorialreviews[0]) }}" />
+                <div itemprop="brand" itemscope itemtype="http://schema.org/Organization">
+                    <meta itemprop="name" content="{{ relatedProduct.brand }}" />
+                </div>
+                <div itemprop="manufacturer" itemscope itemtype="http://schema.org/Organization">
+                    <meta itemprop="name" content="{{ relatedProduct.brand }}" />
+                </div>
+                <meta itemprop="productID" content="{{ relatedProduct.asin }}" />
+                <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                    <meta itemprop="priceCurrency" content="USD" />
+                    <meta itemprop="price" content="{{ formatPrice(relatedProduct.price) }}" />
+                    <meta itemprop="category" content="{{ relatedProduct.category }}" />
+                    <link itemprop="availability" itemtype="http://schema.org/InStock" content="In Stock" />
+                    <link itemprop="itemCondition" itemtype="http://schema.org/NewCondition" content="New" />
+                </div>
+                <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                    <meta itemprop="ratingValue" content="4.8" />
+                    <meta itemprop="reviewCount" content="{{ relatedProduct.salesrank }}" />
+                </div>
+                <link itemprop="releaseDate" itemtype="http://schema.org/Date" content="{{ relatedProduct.dateAdded | date:'yyyy-MM-dd' }}" />
+            </div>
+        </div>
+    </div>
+    <!--end meta tags-->
+    <div class="col-md-6 preview-product-col">
+        <div>
+            <h1 class="preview-product-title-h1" ng-bind="productData.title"></h1>
+        </div>
+        <div id="blueimp-gallery" class="blueimp-gallery">
+            <!-- The container for the modal slides -->
+            <div class="slides"></div>
+            <!-- Controls for the borderless lightbox -->
+            <h3 class="title"></h3>
+            <a class="prev">‹</a>
+            <a class="next">›</a>
+            <a class="close">×</a>
+            <a class="play-pause"></a>
+            <ol class="indicator"></ol>
+            <!-- The modal dialog, which will be used to wrap the lightbox content -->
+            <div class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title"></h4>
+                        </div>
+                        <div class="modal-body next"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left prev">
+                                <i class="glyphicon glyphicon-chevron-left"></i>
+                                Previous
+                            </button>
+                            <button type="button" class="btn btn-primary next">
+                                Next
+                                <i class="glyphicon glyphicon-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="links">
+            <a ng-repeat="image in productData.images track by $index" href="{{ image }}" data-gallery>
+                <img class="preview-product-price-thumb-img" ng-src="{{ image }}" alt="{{ productData.slug + $index }}">
+            </a>
+        </div>
+        <div class="preview-product-price-main-div">
+            <div>
+                <div class="preview-product-inline-title">Price: </div>
+                <div class="preview-product-old-price" ng-bind="formatOldPrice(productData.price, productData.oldprice)"></div>
+                <h2 class="preview-product-price" ng-bind="formatPrice(productData.price)"></h2>
+                <div class="preview-product-amazon-div"><img class="img-responsive preview-product-amazon-img" src="content/images/amazon-small-logo.jpg" alt="amazon-logo" /></div>
+            </div>
+            <div ng-show="calculateDiscount(productData.price, productData.oldprice)">
+                <div class="preview-product-inline-title">Discount: <h2 class="preview-product-discount" ng-bind="calculateDiscount(productData.price, productData.oldprice)"></h2></div>
+            </div>
+        </div>
+        <div>
+            <div ng-click="buyButton(productData.producturl)" class="text-center preview-product-amazon-details-button">Details</div>
+            <div ng-click="buyButton(productData.producturl)" class="text-center preview-product-amazon-buy-button">Buy</div>
+        </div>
+        <div>
+            <h2 class="preview-product-block-title-h2">Product information</h2>
+            <table class="table table-bordered preview-product-table">
+                <tr ng-show="productData.brand">
+                    <td class="preview-product-table-title">Brand</td>
+                    <td><h2 class="preview-product-table-data" ng-bind="productData.brand"></h2></td>
+                </tr>
+                <tr ng-show="productData.category">
+                    <td class="preview-product-table-title">Category</td>
+                    <td><h2 class="preview-product-table-data" ng-bind="productData.category"></h2></td>
+                </tr>
+                <tr ng-show="productData.model">
+                    <td class="preview-product-table-title">Model</td>
+                    <td><h2 class="preview-product-table-data" ng-bind="productData.model"></h2></td>
+                </tr>
+            </table>
+        </div>
+        <div ng-show="productData.features[0]">
+            <h2 class="preview-product-block-title-h2">Product features</h2>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-info preview-product-features-li" ng-repeat="feature in productData.features" ng-bind="feature">
+                </li>
+            </ul>
+        </div>
+        <div ng-show="productData.editorialreviews[0]">
+            <h2 class="preview-product-block-title-h2">Product description</h2>
+            <div class="preview-product-description" ng-bind-html="editorialText(productData.editorialreviews[0])"></div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div ng-bind="testStr"></div>                
+        <div class="preview-product-div-text1">
+            <div class="text-center preview-text-top-stars">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div>
+            <div class="preview-product-text1">
+                Our collection of men’s and women's watches have the finest and well designed watch brands in the world.
+                Our watch brands include OMEGA, TAG Heuer, Longines, Armani, Gucci, DKNY and Michael Kors plus many more.
+                So whether you’re looking for cool designer watches for men or fashionable watches for women, we’re certain to have the perfect timepiece for you.
+                Combining retro design with modern day technology, the Online Shopping Hub Collection offers trend-setting timepieces that will delight any customer.
+                Casio watches are designed to be practical.
+            </div>  
+        </div>
+        <div class="preview-product-div-text1">
+            <div class="text-center preview-text-top-stars">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div>
+            <div class="preview-product-text1">
+                All at great prices, each Casio watch is sure to be a hit whether you are giving the timepiece as a present or simply treating yourself.
+                Accurist is a brand that is highly sought after throughout many countries and offers simple and stylish watches to both men and women.
+                If you are looking for  watches could cool designer watches for men or fashionable watches for women be just what you have been looking for.
+                Choose from a whole host of designs that we have available.
+            </div>
+        </div>
+        <div class="preview-product-div-text1">
+            <div class="text-center preview-text-top-stars">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div>
+            <div class="preview-product-text1">
+                Inspired by urban culture, music and international style trends, Armani Exchange watches are designed with fashion conscious individuals in mind.
+                From world-renowned Armani offers watches for both men and women that are both practical and stylish.
+                Choose your new watch from the Online Shopping Hub collection.
+            </div>
+        </div>
+        <div class="preview-product-div-text2">
+            <div class="text-center preview-text-top-stars">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div>
+            <div class="preview-product-text1">
+                Baby-G combines stylish design with a practical making it the ultimate watch for women.
+                Throughout the Online Shopping Hub watches collection, you will find variation for every outfit, occasion and adventure.
+                Bentley combines the best of both worlds. Style and performance. Luxury and accomplishment. Class and audacity. Power and refinement.
+                With master watchmakers and designs that reflect current trends, the end result is a Online Shopping Hub collection of stunning timepieces.
+                Each individual Daniel Wellington watch is designed to complement the your look.
+                The traditional yet crisp designs blend will appeal to everyone with a sense for classic and timeless design.
+                Rebellious and never shy, Diesel is a brand that doesn’t follow trends, it makes them.
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row" itemscope itemtype="http://schema.org/ItemList" ng-show="catProducts">
+    <div class="col-md-2 col-xs-6" ng-repeat="product in catProducts">
+        <div class="panel panel-default sample-product-panel" itemprop="itemListElement" itemscope itemtype="http://schema.org/Product">
+            <!--meta tags-->
+            <meta itemprop="name" content="{{ product.title }}" />
+            <meta itemprop="description" content="{{ removeHtmlTags(product.editorialreviews[0]) }}" />
+            <div itemprop="brand" itemscope itemtype="http://schema.org/Organization">
+                <meta itemprop="name" content="{{ product.brand }}" />
+            </div>
+            <div itemprop="manufacturer" itemscope itemtype="http://schema.org/Organization">
+                <meta itemprop="name" content="{{ product.brand }}" />
+            </div>
+            <meta itemprop="productID" content="{{ product.asin }}" />
+            <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                <meta itemprop="priceCurrency" content="USD" />
+                <meta itemprop="price" content="{{ formatPrice(product.price) }}" />
+                <meta itemprop="category" content="{{ product.category }}" />
+                <link itemprop="availability" itemtype="http://schema.org/InStock" content="In Stock" />
+        			 <link itemprop="itemCondition" itemtype="http://schema.org/NewCondition" content="New" />
+            </div>
+            <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                <meta itemprop="ratingValue" content="4.8" />
+                <meta itemprop="reviewCount" content="{{ product.salesrank }}" />
+            </div>
+            <link itemprop="releaseDate" itemtype="http://schema.org/Date" content="{{ product.dateAdded | date:'yyyy-MM-dd' }}" />
+
+
+            <!--end meta tags-->
+            <a ui-sref="watchesProduct({id:product._id, slug:product.slug})" itemprop="url" class="sample-product-a">
+                <div class="panel-body">
+                    <div>
+                        <div ng-show="calculateDiscount(product.price, product.oldprice)" class="pull-right sample-product-sale-tag" ng-bind="calculateDiscount(product.price, product.oldprice)"></div>
+                    </div>
+                    <div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+                        <img class="img-responsive sample-product-img" ng-src="{{ product.images[0] }}" alt="{{ product.slug }}" itemprop="contentUrl" />
+                        <meta itemprop="name" content="{{ product.title }}" />
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <h4 class="sample-product-title" ng-bind="product.title"></h4>
+                    <div>
+                        <div class="sample-product-old-price" ng-bind="formatOldPrice(product.price, product.oldprice)"></div>
+                        <div class="sample-product-price"><b ng-bind="formatPrice(product.price)"></b></div>
+                        <div class="sample-product-amazon-div"><img class="img-responsive sample-product-amazon-img" src="content/images/amazon-small-logo.jpg" alt="{{ 'amazon3' + $index }}" /></div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="mainApp">
+<head ng-controller="metaTagsCtrl">
+	 <base href="/">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ description }}">  
+    <meta name="keyword" content="{{ title }}">
+    <meta name="robots" content="index,follow" />
+    <meta name="revisit-after" content="1 days" />
+    <link rel="author" href="https://plus.google.com/101337414971261761576" />
+    <link rel="publisher" href="https://plus.google.com/101337414971261761576" />
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:url" content="{{ metaUrl }}">
+    <meta property="og:image" content="{{ image }}" />
+    <meta property="og:site_name" content="All for you">
+    <meta property="fb:app_id" content="278550745669132">
+    <title ng-bind="title">All for you</title>
+    <meta name="thumbnail" content="{{ image }}" />
+    <link rel="alternate" href="{{ metaUrl }}" hreflang="en-us" />
+    <link rel="shortcut icon" href="content/images/favicon.ico" type="image/x-icon" />
+	 
+	<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css"  />
+    <link rel="stylesheet" href="libs/blueimp-gallery/css/blueimp-gallery.min.css" />
+    <link href="libs/blueimp-bootstrap-image-gallery/css/bootstrap-image-gallery.min.css" rel="stylesheet" />
+    <link href="content/css/site.css" rel="stylesheet" />
+    
+    
+</head>
+<body>
+    <!-- Start Header-->
+    <div class="navbar navbar-default navbar-fixed-top header" role="navigation">
+        <div class="container-fluid header-first-navbar">
+            <div class="navbar-header header-brand-main-div">
+                <button type="button" class="navbar-toggle header-main-nav-button" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar header-main-nav-icon"></span>
+                    <span class="icon-bar header-main-nav-icon"></span>
+                    <span class="icon-bar header-main-nav-icon"></span>
+                </button>
+                <a ui-sref="home" class="navbar-brand header-brand">
+                    <div class="header-app-icon">
+                        <i class="glyphicon glyphicon-shopping-cart "></i>
+                    </div>
+                    <div class="header-app-name-up">All for you</div>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" ng-controller="headerSearchCtrl">
+                <div class="nav navbar-nav navbar-left col-md-4 header-search-form">
+                    <div class="input-group tpad">
+                        <span class="input-group-addon header-search-form-span">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </span>
+                        <input class="form-control header-search-input" ng-keyup="updateHeaderSeachText(headerSearchText)"
+                               data-toggle="dropdown" type="text" placeholder="Search products..." autocomplete="off" name="search"
+                               ng-model="headerSearchText">
+                        <ul class="dropdown-menu col-sm-12 header-search-result-ul" role="menu">
+                            <li ng-show="electronicsSearchResult">
+                                <a rel="nofollow" ui-sref="electronics({ title:newHeaderSeachText})" ng-click="removeSearchText()" class="col-sm-12 header-search-result-a">
+                                    Found <b ng-bind="electronicsSearchResult"></b> products in Electronics.
+                                </a>
+                            </li>
+                            <li ng-show="computersLaptopsSearchResult">
+                                <a rel="nofollow" ui-sref="computersLaptops({ title:newHeaderSeachText})" ng-click="removeSearchText()" class="col-sm-12 header-search-result-a">
+                                    Found <b ng-bind="computersLaptopsSearchResult"></b> products in Computers &amp Laptops.
+                                </a>
+                            </li>
+                            <li ng-show="watchesSearchResult">
+                                <a rel="nofollow" ui-sref="watches({ title:newHeaderSeachText})" ng-click="removeSearchText()" class="col-sm-12 header-search-result-a">
+                                    Found <b ng-bind="watchesSearchResult"></b> products in Watches.
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <ul class="nav navbar-nav navbar-right header-navigation">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle header-electrinics-a" data-toggle="dropdown" role="button" aria-expanded="false">Electronics <span class="caret"></span></a>
+                        <ul class="dropdown-menu header-ul-dropdown" role="menu" itemscope itemtype="http://schema.org/BreadcrumbList">
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="electronicsCategory({ category:'cell-phones'})" class="header-subcategory-a" itemprop="item">Cell Phones</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="Cell Phones" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="electronicsCategory({ category:'cell-phones-accessories'})" class="header-subcategory-a" itemprop="item">Cell Phones Accessories</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="Cell Phones Accessories" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="electronicsCategory({ category:'tv-video'})" class="header-subcategory-a" itemprop="item">TV &amp Video</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="TV &amp Video" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="electronicsCategory({ category:'photo-camera'})" class="header-subcategory-a" itemprop="item">Photo &amp Camera</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="Photo &amp Camera" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="electronicsCategory({ category:'home-audio'})" class="header-subcategory-a" itemprop="item">Home Audio</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="Home Audio" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="electronicsCategory({ category:'gps'})" class="header-subcategory-a" itemprop="item">GPS</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="GPS" />
+                            </li>
+                            <li class="divider"></li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a class="header-subcategory-a" ui-sref="electronics" itemprop="item">Electronics</a>
+                                <meta itemprop="position" content="1" />
+                                <meta itemprop="name" content="Electronics" />
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle header-computers-a" data-toggle="dropdown" role="button" aria-expanded="false">Computers &amp Laptops <span class="caret"></span></a>
+                        <ul class="dropdown-menu header-ul-dropdown" role="menu" itemscope itemtype="http://schema.org/BreadcrumbList">
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="computersLaptopsCategory({ category:'desktops'})" class="header-subcategory-a" itemprop="item">Desktops</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="Desktops" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="computersLaptopsCategory({ category:'laptops'})" class="header-subcategory-a" itemprop="item">Laptops</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="Laptops" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="computersLaptopsCategory({ category:'tablets'})" class="header-subcategory-a" itemprop="item">Tablets</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="Tablets" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="computersLaptopsCategory({ category:'monitors'})" class="header-subcategory-a" itemprop="item">Monitors</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="Monitors" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="computersLaptopsCategory({ category:'printers'})" class="header-subcategory-a" itemprop="item">Printers</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="Printers" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="computersLaptopsCategory({ category:'scanners'})" class="header-subcategory-a" itemprop="item">Scanners</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="Scanners" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="computersLaptopsCategory({ category:'routers'})" class="header-subcategory-a" itemprop="item">Routers</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="Routers" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="computersLaptopsCategory({ category:'webcams'})" class="header-subcategory-a" itemprop="item">Webcams</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="Webcams" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="computersLaptopsCategory({ category:'external-hard-drives'})" class="header-subcategory-a" itemprop="item">External Hard Drives</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="External Hard Drives" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="computersLaptopsCategory({ category:'usb-flash-drives'})" class="header-subcategory-a" itemprop="item">USB Flash Drives</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="USB Flash Drives" />
+                            </li>
+                            <li class="divider"></li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="computersLaptops" class="header-subcategory-a" itemprop="item">Computers &amp Laptops</a>
+                                <meta itemprop="position" content="1" />
+                                <meta itemprop="name" content="Computers &amp Laptops" />
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle header-watches-a" data-toggle="dropdown" role="button" aria-expanded="false">Watches <span class="caret"></span></a>
+                        <ul class="dropdown-menu header-ul-dropdown" role="menu" itemscope itemtype="http://schema.org/BreadcrumbList">
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="watchesCategory({ category:'mens-watches'})" class="header-subcategory-a" itemprop="item">Men's Watches</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="Men's Watches" />
+                            </li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="watchesCategory({ category:'womens-watches'})" class="header-subcategory-a" itemprop="item">Women's Watches</a>
+                                <meta itemprop="position" content="2" />
+                                <meta itemprop="name" content="Women's Watches" />
+                            </li>
+                            <li class="divider"></li>
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a ui-sref="watches" class="header-subcategory-a" itemprop="item">Watches</a>
+                                <meta itemprop="position" content="1" />
+                                <meta itemprop="name" content="Watches" />
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--End Header-->
+    <div id="angular-content" ui-view></div>
+
+
+    <!-- 3rd party libraries -->
+    <script src="libs/jquery/dist/jquery.min.js"></script>
+
+    <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="libs/angular/angular.min.js"></script>
+    <script src="libs/angular-resource/angular-resource.min.js"></script>
+    <script src="libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="libs/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="libs/angular-utils-pagination/dirPagination.js"></script>
+    <script src="libs/angularjs-socialshare/dist/angular-socialshare.min.js"></script>
+    <script src="libs/blueimp-gallery/js/jquery.blueimp-gallery.min.js"></script>
+    <script src="libs/blueimp-bootstrap-image-gallery/js/bootstrap-image-gallery.min.js"></script>
+
+    <!--app-->
+    <script src="app/app.js"></script>
+    <!--home-->
+    <script src="app/home/controllers/homeCtrl.js"></script>
+    <!--electronics-->
+    <script src="app/electronics/services/electronicsService.js"></script>
+    <script src="app/electronics/services/electronicsCategoryService.js"></script>
+    <script src="app/electronics/services/electronicsSubcategoryService.js"></script>
+    <script src="app/electronics/controllers/electronicsCtrl.js"></script>
+    <script src="app/electronics/controllers/electronicsCategoryCtrl.js"></script>
+    <script src="app/electronics/controllers/electronicsProductCtrl.js"></script>
+    <!--computers laptops-->
+    <script src="app/computersLaptops/services/computersLaptopsService.js"></script>
+    <script src="app/computersLaptops/services/computersLaptopsCategoryService.js"></script>
+    <script src="app/computersLaptops/controllers/computersLaptopsCtrl.js"></script>
+    <script src="app/computersLaptops/controllers/computersLaptopsCategoryCtrl.js"></script>
+    <script src="app/computersLaptops/controllers/computersLaptopsProductCtrl.js"></script>
+    <!--watches-->
+    <script src="app/watches/services/watchesService.js"></script>
+    <script src="app/watches/services/watchesCategoryService.js"></script>
+    <script src="app/watches/controllers/watchesCtrl.js"></script>
+    <script src="app/watches/controllers/watchesCategoryCtrl.js"></script>
+    <script src="app/watches/controllers/watchesProductCtrl.js"></script>
+    <!--meta tags-->
+    <script src="app/metaTags/controllers/metaTagsCtrl.js"></script>
+    <!--social media-->
+    <script src="app/socialMedia/controllers/socialMediaCtrl.js"></script>
+    <!--header search-->
+    <script src="app/headerSearch/controllers/headerSearchCtrl.js"></script>
+
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="pull-left">
+                <div><i class="fa fa-copyright"></i>  All for you. 2015 All Rights Reserved. Designed by Edo Polimac</div>
+                <div><a class="footer-mail" rel="nofollow" href="mailto:edopolimac@gmail.com">edopolimac@gmail.com</a></div>
+            </div>
+            <div class="pull-right footer-social-main-div" ng-controller="socialMediaCtrl">
+                <button class="btn-link footer-social-div" socialshare socialshare-provider="facebook" socialshare-url="{{ socialUrl }}" socialshare-text="{{ description }}" socialshare-media="{{ socialImage }}">
+                    <i class="fa fa-facebook"></i>
+                </button>
+                <button class="btn-link footer-social-div" socialshare socialshare-provider="twitter" socialshare-url="{{ socialUrl }}" socialshare-text="{{ description }}" socialshare-media="{{ socialImage }}" socialshare-hashtags="shopping, online-shopping, interesting">
+                    <i class="fa fa-twitter"></i>
+                </button>
+                <button class="btn-link footer-social-div" socialshare socialshare-provider="google+" socialshare-url="{{ socialUrl }}" socialshare-text="{{ description }}" socialshare-media="{{ socialImage }}">
+                    <i class="fa fa-google-plus"></i>
+                </button>
+                <button class="btn-link footer-social-div" socialshare socialshare-provider="linkedin" socialshare-url="{{ socialUrl }}" socialshare-text="{{ description }}" socialshare-media="{{ socialImage }}">
+                    <i class="fa fa-linkedin"></i>
+                </button>
+                <button class="btn-link footer-social-div" socialshare socialshare-provider="pinterest" socialshare-url="{{ socialUrl }}" socialshare-text="{{ description }}" socialshare-media="{{ socialImage }}">
+                    <i class="fa fa-pinterest"></i>
+                </button>
+            </div> 
+        </div>
+    </footer>
+    <!--end footer-->
+
+
+    
+
+	 
+</body>
+</html>
